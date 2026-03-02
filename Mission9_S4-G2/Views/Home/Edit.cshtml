@@ -1,4 +1,4 @@
-@model Mission9_S4_G2.Models.QuadrantContext
+@model Mission8_S4_G2.Models.Task
 
 <h2>Edit Task</h2>
 
@@ -40,6 +40,13 @@
         <label asp-for="Completed" class="form-check-label"></label>
     </div>
 
-    <button type="submit" class="btn btn-success">Update Task</button>
+    <div class="mt-3">
+        <button type="submit" class="btn btn-success">Update Task</button>
+
+        <a asp-action="Index"
+           class="btn btn-secondary ms-2">
+            Cancel
+        </a>
+    </div>
 
 </form>
