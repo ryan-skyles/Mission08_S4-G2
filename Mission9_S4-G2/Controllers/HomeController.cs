@@ -18,7 +18,8 @@ namespace Mission8_S4_G2.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var tasks = _context.Tasks.Include(t => t.Category).ToList();
+            return View("~/Views/Tasks/Index.cshtml", tasks);
         }
 
         [HttpGet]

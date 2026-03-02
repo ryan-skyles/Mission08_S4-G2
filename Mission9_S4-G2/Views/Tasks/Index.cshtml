@@ -1,7 +1,7 @@
-@model IEnumerable<Mission9_S4_G2.Models.Task>
+@model IEnumerable<Mission8_S4_G2.Models.Task>
 @{
     ViewData["Title"] = "Quadrants";
-    var tasks = Model ?? Enumerable.Empty<Mission9_S4_G2.Models.Task>();
+    var tasks = Model ?? Enumerable.Empty<Mission8_S4_G2.Models.Task>();
     var incomplete = tasks.Where(t => !t.Completed);
     var q1 = incomplete.Where(t => t.Quadrant == 1);
     var q2 = incomplete.Where(t => t.Quadrant == 2);
@@ -16,7 +16,7 @@
     @if (!incomplete.Any())
     {
         <div class="alert alert-info" role="alert">
-            <strong>No incomplete tasks.</strong> <a asp-controller="Tasks" asp-action="Create">Add a task</a> to get started.
+            <strong>No incomplete tasks.</strong> <a asp-controller="Home" asp-action="Add">Add a task</a> to get started.
         </div>
     }
     else
@@ -30,7 +30,7 @@
                     <div class="card-body">
                         @if (!q1.Any())
                         {
-                            <p class="text-muted mb-0">No tasks. <a asp-controller="Tasks" asp-action="Create">Add a task</a>.</p>
+                            <p class="text-muted mb-0">No tasks. <a asp-controller="Home" asp-action="Add">Add a task</a>.</p>
                         }
                         else
                         {
@@ -39,13 +39,13 @@
                                 <div class="border rounded p-2 mb-2">
                                     <strong>@task.TaskName</strong>
                                     <br />
-                                    <small class="text-muted">Due: @(string.IsNullOrEmpty(task.DueDate) ? "—" : task.DueDate) | Category: @(task.CategoryName?.CategoryName ?? "—")</small>
+                                    <small class="text-muted">Due: @(string.IsNullOrEmpty(task.DueDate) ? "—" : task.DueDate) | Category: @(task.Category?.CategoryName ?? "—")</small>
                                     <div class="mt-2">
-                                        <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.TaskId" class="btn btn-primary btn-sm">Edit</a>
-                                        <form asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.TaskId" method="post" class="d-inline" onsubmit="return confirm('Delete this task?');">
+                                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@task.TaskId" class="btn btn-primary btn-sm">Edit</a>
+                                        <form asp-controller="Home" asp-action="Delete" asp-route-id="@task.TaskId" method="post" class="d-inline" onsubmit="return confirm('Delete this task?');">
                                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                         </form>
-                                        <form asp-controller="Tasks" asp-action="MarkCompleted" asp-route-id="@task.TaskId" method="post" class="d-inline">
+                                        <form asp-controller="Home" asp-action="MarkCompleted" asp-route-id="@task.TaskId" method="post" class="d-inline">
                                             <button type="submit" class="btn btn-success btn-sm">Complete</button>
                                         </form>
                                     </div>
@@ -64,7 +64,7 @@
                     <div class="card-body">
                         @if (!q2.Any())
                         {
-                            <p class="text-muted mb-0">No tasks. <a asp-controller="Tasks" asp-action="Create">Add a task</a>.</p>
+                            <p class="text-muted mb-0">No tasks. <a asp-controller="Home" asp-action="Add">Add a task</a>.</p>
                         }
                         else
                         {
@@ -73,13 +73,13 @@
                                 <div class="border rounded p-2 mb-2">
                                     <strong>@task.TaskName</strong>
                                     <br />
-                                    <small class="text-muted">Due: @(string.IsNullOrEmpty(task.DueDate) ? "—" : task.DueDate) | Category: @(task.CategoryName?.CategoryName ?? "—")</small>
+                                    <small class="text-muted">Due: @(string.IsNullOrEmpty(task.DueDate) ? "—" : task.DueDate) | Category: @(task.Category?.CategoryName ?? "—")</small>
                                     <div class="mt-2">
-                                        <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.TaskId" class="btn btn-primary btn-sm">Edit</a>
-                                        <form asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.TaskId" method="post" class="d-inline" onsubmit="return confirm('Delete this task?');">
+                                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@task.TaskId" class="btn btn-primary btn-sm">Edit</a>
+                                        <form asp-controller="Home" asp-action="Delete" asp-route-id="@task.TaskId" method="post" class="d-inline" onsubmit="return confirm('Delete this task?');">
                                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                         </form>
-                                        <form asp-controller="Tasks" asp-action="MarkCompleted" asp-route-id="@task.TaskId" method="post" class="d-inline">
+                                        <form asp-controller="Home" asp-action="MarkCompleted" asp-route-id="@task.TaskId" method="post" class="d-inline">
                                             <button type="submit" class="btn btn-success btn-sm">Complete</button>
                                         </form>
                                     </div>
@@ -98,7 +98,7 @@
                     <div class="card-body">
                         @if (!q3.Any())
                         {
-                            <p class="text-muted mb-0">No tasks. <a asp-controller="Tasks" asp-action="Create">Add a task</a>.</p>
+                            <p class="text-muted mb-0">No tasks. <a asp-controller="Home" asp-action="Add">Add a task</a>.</p>
                         }
                         else
                         {
@@ -107,13 +107,13 @@
                                 <div class="border rounded p-2 mb-2">
                                     <strong>@task.TaskName</strong>
                                     <br />
-                                    <small class="text-muted">Due: @(string.IsNullOrEmpty(task.DueDate) ? "—" : task.DueDate) | Category: @(task.CategoryName?.CategoryName ?? "—")</small>
+                                    <small class="text-muted">Due: @(string.IsNullOrEmpty(task.DueDate) ? "—" : task.DueDate) | Category: @(task.Category?.CategoryName ?? "—")</small>
                                     <div class="mt-2">
-                                        <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.TaskId" class="btn btn-primary btn-sm">Edit</a>
-                                        <form asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.TaskId" method="post" class="d-inline" onsubmit="return confirm('Delete this task?');">
+                                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@task.TaskId" class="btn btn-primary btn-sm">Edit</a>
+                                        <form asp-controller="Home" asp-action="Delete" asp-route-id="@task.TaskId" method="post" class="d-inline" onsubmit="return confirm('Delete this task?');">
                                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                         </form>
-                                        <form asp-controller="Tasks" asp-action="MarkCompleted" asp-route-id="@task.TaskId" method="post" class="d-inline">
+                                        <form asp-controller="Home" asp-action="MarkCompleted" asp-route-id="@task.TaskId" method="post" class="d-inline">
                                             <button type="submit" class="btn btn-success btn-sm">Complete</button>
                                         </form>
                                     </div>
@@ -132,7 +132,7 @@
                     <div class="card-body">
                         @if (!q4.Any())
                         {
-                            <p class="text-muted mb-0">No tasks. <a asp-controller="Tasks" asp-action="Create">Add a task</a>.</p>
+                            <p class="text-muted mb-0">No tasks. <a asp-controller="Home" asp-action="Add">Add a task</a>.</p>
                         }
                         else
                         {
@@ -141,13 +141,13 @@
                                 <div class="border rounded p-2 mb-2">
                                     <strong>@task.TaskName</strong>
                                     <br />
-                                    <small class="text-muted">Due: @(string.IsNullOrEmpty(task.DueDate) ? "—" : task.DueDate) | Category: @(task.CategoryName?.CategoryName ?? "—")</small>
+                                    <small class="text-muted">Due: @(string.IsNullOrEmpty(task.DueDate) ? "—" : task.DueDate) | Category: @(task.Category?.CategoryName ?? "—")</small>
                                     <div class="mt-2">
-                                        <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.TaskId" class="btn btn-primary btn-sm">Edit</a>
-                                        <form asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.TaskId" method="post" class="d-inline" onsubmit="return confirm('Delete this task?');">
+                                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@task.TaskId" class="btn btn-primary btn-sm">Edit</a>
+                                        <form asp-controller="Home" asp-action="Delete" asp-route-id="@task.TaskId" method="post" class="d-inline" onsubmit="return confirm('Delete this task?');">
                                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                         </form>
-                                        <form asp-controller="Tasks" asp-action="MarkCompleted" asp-route-id="@task.TaskId" method="post" class="d-inline">
+                                        <form asp-controller="Home" asp-action="MarkCompleted" asp-route-id="@task.TaskId" method="post" class="d-inline">
                                             <button type="submit" class="btn btn-success btn-sm">Complete</button>
                                         </form>
                                     </div>
