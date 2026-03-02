@@ -4,7 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Mission9_S4_G2</RootNamespace>
+    <RootNamespace>Mission8_S4_G2</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

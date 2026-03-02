@@ -1,36 +1,33 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Mission8_S4_G2.Models;
-using SQLitePCL;
 using System.Diagnostics;
 
 namespace Mission8_S4_G2.Controllers
 {
-
     public class HomeController : Controller
     {
-        private QuadrantsContext _context;
+        private ITasksRepository _repository;
 
-        public HomeController(QuadrantsContext temp)
+        public HomeController(ITasksRepository repository)
         {
-            _context = temp;
+            _repository = repository;
         }
+
         public IActionResult Index()
         {
-            var tasks = _context.Tasks.Include(t => t.Category).ToList();
-            return View("~/Views/Tasks/Index.cshtml", tasks);
+            var tasks = _repository.GetAllTasks();
+            return View(tasks);
         }
 
         [HttpGet]
         public IActionResult Add()
         {
             ViewBag.Categories = new SelectList(
-                _context.Categories
-                    .OrderBy(c => c.CategoryName)
-                    .ToList(),
+                _repository.GetCategories(),
                 "CategoryId",
                 "CategoryName");
+
             return View(new Models.Task());
         }
 
@@ -40,25 +37,22 @@ namespace Mission8_S4_G2.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Tasks.Add(task);
-                _context.SaveChanges();
-
+                _repository.AddTask(task);
                 return RedirectToAction("Index");
             }
 
             ViewBag.Categories = new SelectList(
-                _context.Categories
-                    .OrderBy(c => c.CategoryName)
-                    .ToList(),
+                _repository.GetCategories(),
                 "CategoryId",
                 "CategoryName");
+
             return View(task);
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var task = _context.Tasks.FirstOrDefault(t => t.TaskId == id);
+            var task = _repository.GetTaskById(id);
 
             if (task == null)
             {
@@ -66,11 +60,10 @@ namespace Mission8_S4_G2.Controllers
             }
 
             ViewBag.Categories = new SelectList(
-                _context.Categories
-                    .OrderBy(c => c.CategoryName)
-                    .ToList(),
+                _repository.GetCategories(),
                 "CategoryId",
                 "CategoryName");
+
             return View(task);
         }
 
@@ -80,18 +73,15 @@ namespace Mission8_S4_G2.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Update(task);
-                _context.SaveChanges();
-
+                _repository.UpdateTask(task);
                 return RedirectToAction("Index");
             }
 
             ViewBag.Categories = new SelectList(
-                _context.Categories
-                    .OrderBy(c => c.CategoryName)
-                    .ToList(),
+                _repository.GetCategories(),
                 "CategoryId",
                 "CategoryName");
+
             return View(task);
         }
 
@@ -99,16 +89,14 @@ namespace Mission8_S4_G2.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            var task = _context.Tasks.FirstOrDefault(t => t.TaskId == id);
+            var task = _repository.GetTaskById(id);
 
             if (task == null)
             {
                 return NotFound();
             }
 
-            _context.Tasks.Remove(task);
-            _context.SaveChanges();
-
+            _repository.DeleteTask(task);
             return RedirectToAction("Index");
         }
 
@@ -116,7 +104,7 @@ namespace Mission8_S4_G2.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult MarkCompleted(int id)
         {
-            var task = _context.Tasks.FirstOrDefault(t => t.TaskId == id);
+            var task = _repository.GetTaskById(id);
 
             if (task == null)
             {
@@ -124,9 +112,7 @@ namespace Mission8_S4_G2.Controllers
             }
 
             task.Completed = true;
-            _context.Update(task);
-            _context.SaveChanges();
-
+            _repository.UpdateTask(task);
             return RedirectToAction("Index");
         }
 
@@ -138,6 +124,5 @@ namespace Mission8_S4_G2.Controllers
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
             });
         }
-
     }
 }

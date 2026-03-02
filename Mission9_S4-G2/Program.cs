@@ -11,7 +11,7 @@ builder.Services.AddDbContext<QuadrantsContext>(options =>
     options.UseSqlite(builder.Configuration["ConnectionStrings:DatabaseConnection"]);
 });
 
-//builder.Services.AddScoped<ITasksRepository, EFTasksRepository>();
+builder.Services.AddScoped<ITasksRepository, EFTasksRepository>();
 
 var app = builder.Build();
 
@@ -38,14 +38,6 @@ using (var scope = app.Services.CreateScope())
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // ...
-}
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
